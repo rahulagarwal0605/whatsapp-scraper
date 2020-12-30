@@ -11,7 +11,7 @@ qrcode = QRcode(app)
 def index():
     driver = webdriver.Chrome()
     driver.implicitly_wait(10)
-    driver.get("https://web.whatsapp.com")
+    driver.get("https://google.com")
     return driver.page_source
     # element = None
     # while element==None:
