@@ -16,4 +16,4 @@ def index():
     while element==None:
         element = driver.find_element_by_class_name('_1yHR2').get_attribute("data-ref")
     app.logger.info(element)
-    return render_template('index.html', data = qrcode(element, box_size=5, error_correction='H'))
+    return render_template('index.html', data = qrcode(element, box_size=4, error_correction='H'))
