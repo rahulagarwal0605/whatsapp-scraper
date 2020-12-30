@@ -12,8 +12,9 @@ def index():
     driver = webdriver.Chrome()
     driver.implicitly_wait(10)
     driver.get("https://web.whatsapp.com")
-    element = None
+    return driver.page_source
+    # element = None
     # while element==None:
     #     element = driver.find_element_by_class_name('_1yHR2').get_attribute("data-ref")
-    app.logger.info(element)
-    return render_template('index.html', data = qrcode(element, box_size=4, error_correction='H'))
+    # app.logger.info(element)
+    # return render_template('index.html', data = qrcode(element, box_size=4, error_correction='H'))
