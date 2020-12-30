@@ -10,7 +10,10 @@ qrcode = QRcode(app)
 @app.route('/index')
 def index():
     driver = webdriver.Chrome()
+    driver.implicitly_wait(10)
     driver.get("https://web.whatsapp.com")
-    content = driver.find_element_by_class_name('_1yHR2').get_attribute("data-ref")
-    app.logger.info(content)
-    return render_template('index.html', data = qrcode(content, box_size=5, error_correction='H'))
+    element = None
+    while element==None:
+        element = driver.find_element_by_class_name('_1yHR2').get_attribute("data-ref")
+    app.logger.info(element)
+    return render_template('index.html', data = qrcode(element, box_size=5, error_correction='H'))
