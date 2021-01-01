@@ -6,6 +6,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import NoSuchElementException
 
 import time
 
@@ -36,7 +37,21 @@ def generate():
     while element is None:
         element = driver.find_element_by_class_name('_1yHR2').get_attribute("data-ref")
         app.logger.info(element)
-    return qrcode(element, box_size=4, error_correction='H')
+    return qrcode(element, error_correction='H')
+
+@app.route('/verify_scan', methods=['GET', 'POST'])
+def verify_scan():
+    try:
+        element = WebDriverWait(driver, 20).until_not(EC.presence_of_element_located((By.CLASS_NAME, '_1yHR2')))
+        return "verified"
+    except TimeoutException:
+        element = driver.find_element_by_class_name('_1yHR2').get_attribute("data-ref")
+        return qrcode(element, error_correction='H')
+    return "unknown"
+
+@app.route('/dashboard', methods=['GET', 'POST'])
+def dashboard():
+    return render_template('dashboard.html')
 
 @app.route('/receive', methods=['GET', 'POST'])
 def receive():
